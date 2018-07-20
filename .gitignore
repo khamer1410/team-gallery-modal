@@ -1,3 +1,4 @@
 yarn.lock
 node_modules
 assets/design.psd
+.sass-cache
