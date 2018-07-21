@@ -108,7 +108,7 @@ body {
   transition: 1s;
   }
 
-  &__mask:hover {
+  .photo:hover &__mask {
   opacity: 0;
   }
 }
@@ -129,9 +129,10 @@ body {
   color: white;
   font-size: 25px;
   z-index: 2;
+  transition: 0.8s;
 }
 
 .photo:hover::after {
-  background: red;
+  transform: scale(1.2);
 }
 
