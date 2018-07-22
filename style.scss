@@ -10,7 +10,7 @@ body {
   background: white; /* fallback color */
   font-family: 'Open Sans';
   font-weight: 300;
-  color: grey;
+  color: #000c;;
   font-size: 14px;
 
   /* Making transparent background */
@@ -31,25 +31,27 @@ body {
   border: solid 1px;
   margin: 0 auto;
   min-height: 100vh;
-  max-width: 750px;
+  max-width: 1260px;
 }
 
 /* TEAM */
 .team {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 
-  &__title > h1 {
+  &__title {
+    text-align: center;
     font-family: 'Open Sans', sans-serif ;
     font-size: 60px;
     line-height: 65px;
     color: var(--main-color);
     font-weight: 600;
+    transition: 0.5s;
   }
 
   &__gallery {
     display: grid;
+    grid-template-columns: repeat(4, 211px);
+    grid-gap: 20px;
+    justify-content: space-around;
   }
 }
 
@@ -85,27 +87,26 @@ body {
 
 .photo {
   position: relative;
-  cursor: pointer;  
-
+  
   &__img {
-  position: relative;
-  max-width: 180px;
-  max-height: 180px;
-  border-radius: 50%;
-  cursor: pointer;
+    position: relative;
+    max-width: 180px;
+    max-height: 180px;
+    border-radius: 50%;
   }
-
+  
   &__mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: #47c3db;
-  z-index: 1;
-  opacity: 0.8;
-  transition: 1s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: #47c3db;
+    z-index: 1;
+    opacity: 0.6;
+    transition: 0.8s;
+    cursor: pointer;
   }
 
   .photo:hover &__mask {
@@ -130,9 +131,60 @@ body {
   font-size: 25px;
   z-index: 2;
   transition: 0.8s;
+  cursor: pointer;
 }
 
 .photo:hover::after {
   transform: scale(1.2);
 }
 
+// MODAL
+
+.modal {
+  display: none;
+  background: white; // fallback
+  background: url('assets/modal-bg.png');
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+
+  &--open {
+    display: block;
+  }
+
+  &__overlay {
+    height: 100%;
+    background: rgba(71,195,219,0.55);
+  }
+
+  &__gradient {
+    height: 100%;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+  }
+
+  &__close {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    color: white;
+    font-size: 100px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  
+}
+
+@media (max-width: 950px) {
+  .team__gallery {
+    grid-template-columns: repeat(auto-fit, 211px);
+  }
+
+  .team__title {
+    font-size: 30px;
+  }
+}
