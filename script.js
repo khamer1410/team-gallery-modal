@@ -3,8 +3,6 @@ const closeBtn = document.getElementById('close-btn');
 const teamGallery = document.getElementById('team-gallery');
 const profiles = document.getElementsByClassName('photo');
 
-console.log(profiles);
-
 // (function() {
 // fake data generated in mockaroo
 const teamMembers = [
@@ -62,4 +60,8 @@ Array.from(profiles).forEach(profile => {
 /* TODO:
 1. envelope events
 2. optimize profiles click event
+3. change close btn
+4. add custom slider
+5. Add more animations (modal!)
+6. PixelPerfect
 */

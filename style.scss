@@ -3,6 +3,7 @@
 :root {
   --main-color: rgb(69,46,118);
   --second-color: rgb(72,195,220);
+  --font-color: white;
 }
 
 body {
@@ -28,7 +29,6 @@ body {
 }
 
 .container {
-  border: solid 1px;
   margin: 0 auto;
   min-height: 100vh;
   max-width: 1260px;
@@ -60,7 +60,6 @@ body {
 .profile {
   width: 209px;
   min-height: 209px;
-  border: solid 1px;
   
   &__photo {
     height: 209px;
@@ -139,12 +138,11 @@ body {
 }
 
 // MODAL
-
 .modal {
   display: none;
   background: white; // fallback
   background: url('assets/modal-bg.png');
-  background-size: cover;
+  background-position: bottom;
   position: fixed;
   top: 0;
   right: 0;
@@ -167,17 +165,79 @@ body {
   }
 
   &__close {
-    position: absolute;
-    top: 25px;
-    right: 25px;
-    color: white;
-    font-size: 100px;
-    font-weight: bold;
     cursor: pointer;
+
+    &::before, &::after{
+      content: '';
+      position: absolute;
+      top: 50px;
+      right: 50px;
+      width: 65px;
+      height: 18px;
+      background: white;
+      border-radius: 5px;
+    }
+
+    &::before {
+      transform: rotate(-45deg);
+    }
+
+    &::after {
+      transform: rotate(45deg);
+    }
   }
 
-  
+  &__container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__slider {
+    width: 100%;
+  }
 }
+  .slider {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+   &__arrow {
+    height: 71px;
+    font-size: 68px;
+    color: white;
+    margin: 0 5px 0 50px;
+    cursor: pointer;
+
+    &--right {
+      margin: 0 50px 0 5px;
+    }
+   }
+    
+    &__main {
+      border: dashed grey 5px;
+      width: 1098px;
+      height: 372px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      text-align: center;
+      font-size: 72px;
+    }
+
+    &__text {
+
+    }
+    &__header {
+      font-weight: bold;
+      font-size: 102px;
+    }
+
+  }
 
 @media (max-width: 950px) {
   .team__gallery {
