@@ -2,6 +2,7 @@
 const closeBtn = document.getElementById('close-btn');
 const teamGallery = document.getElementById('team-gallery');
 const profiles = document.getElementsByClassName('photo');
+const sliderArrows = document.querySelectorAll('.slider__arrow');
 
 // (function() {
 // fake data generated in mockaroo
@@ -42,6 +43,7 @@ teamGallery.innerHTML = profilesHTML;
 
 const store = {
   selectedUserId: null,
+  isSliderFrontActive: true,
 }
 
 // EVENTS
@@ -55,6 +57,37 @@ Array.from(profiles).forEach(profile => {
   profile.addEventListener('click', toggleModal);
 })
 
+// SLIDER
+
+sliderArrows.forEach(arrow => arrow.addEventListener('click', (event)=> rotateSlider(event) ));
+
+function rotateSlider(e) {
+  const frontSide = document.querySelector('#cube-front');
+  const backSide = document.querySelector('#cube-back');
+  const cube = document.querySelector('.slider__content');
+
+  const direction = e.target.dataset.direction || 'right';
+  const frontSideOpacity = store.isSliderFrontActive ? 0 : 1;
+  const backSideOpacity = store.isSliderFrontActive ? 1 : 0;
+  
+  // rotate cube's sides according to direction
+  const prevRotation = getComputedStyle(cube).getPropertyValue('--rotation');
+  const prevRotationNumber = parseFloat(prevRotation);
+  const nextRotation = (direction === 'right') ? prevRotationNumber + 180 : prevRotationNumber - 180;
+  cube.style.setProperty('--rotation', `${nextRotation}deg`);
+
+  // switch opacities and save currently active side 
+  frontSide.style.opacity = frontSideOpacity;
+  backSide.style.opacity = backSideOpacity;
+  store.isSliderFrontActive = !store.isSliderFrontActive;
+}
+
+function changeSliderData() {
+  
+}
+
+
+toggleModal();
 
 
 /* TODO:

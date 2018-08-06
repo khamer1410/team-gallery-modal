@@ -232,6 +232,7 @@ body {
     }
 
     &__content {
+      --rotation: 0deg;
       height: 100%;
       display: flex;
       justify-content: center;
@@ -250,12 +251,12 @@ body {
         transition: 2s;
         
         &--front {
-          transform: rotateY(0) translateZ(100px);
+          transform: rotateY(var(--rotation)) translateZ(100px);
           opacity: 1;
         }
 
         &--back {
-          transform: rotateY(180deg) translateZ(100px);
+          transform: rotateY(calc(var(--rotation) - 180deg)) translateZ(100px);
           opacity: 0;
         }
       }
