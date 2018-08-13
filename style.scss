@@ -274,7 +274,6 @@ body {
       font-weight: bold;
       font-size: var(--header-big);
     }
-
   }
 
 
@@ -288,7 +287,7 @@ body {
 
 @media (max-width: 950px) {
   :root {
-    --font-size: 12px;
+    // --font-size: 12px;
   }
 
   .team__gallery {
