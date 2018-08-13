@@ -1,11 +1,6 @@
-// DOM elements
-const closeBtn = document.getElementById('close-btn');
-const teamGallery = document.getElementById('team-gallery');
-const profiles = document.getElementsByClassName('photo');
-const sliderArrows = document.querySelectorAll('.slider__arrow');
 
 const store = {
-  selectedUserId: null,
+  selectedUserIndex: 0,
   isSliderFrontActive: true,
 // fake team data generated in mockaroo
   teamMembers: [
@@ -20,9 +15,7 @@ const store = {
   ],
 }
 
-// (function() {
-
-function generateProfileHTML(data, pictureVersion) {
+function generateProfileHTML(data = {}, pictureVersion = 0) {
   const { photoSrc = `https://source.unsplash.com/random/200x200?v=${pictureVersion}`, id, name, position, location } = data;
   return `
     <div class="profile">
@@ -40,49 +33,74 @@ function generateProfileHTML(data, pictureVersion) {
         </div>  `
 }
 
-const profilesHTML = store.teamMembers.map((person, i) => generateProfileHTML(person, i)).join('');
+function setProfilesData(profilesData) {
+  const teamGallery = document.getElementById('team-gallery');
+  const profilesHTML = profilesData.map((person, i) => generateProfileHTML(person, i)).join('');
+  teamGallery.innerHTML = profilesHTML;
+}
 
-teamGallery.innerHTML = profilesHTML;
-
-// })()
-
+setProfilesData(store.teamMembers);
 
 // EVENTS
+const closeModalBtn = document.getElementById('close-btn');
+closeModalBtn.addEventListener('click', toggleModal);
+
+const profiles = document.getElementsByClassName('photo');
+Array.from(profiles).forEach(profile => {
+  profile.addEventListener('click', setUserByDataset);
+  profile.addEventListener('click', fillCurrentUserData);
+  profile.addEventListener('click', toggleModal);
+})
+
+const sliderArrows = document.querySelectorAll('.slider__arrow');
+sliderArrows.forEach(arrow => arrow.addEventListener('click', (event) => changeSlideHandler(event)));
+
+
+// FUNCTIONS
 function toggleModal() {
   const modal = document.getElementById('modal');
   modal.classList.toggle('modal--open');
 };
 
-function setActiveUser(event) {
+function setUserByDataset(event) {
   const selectedUserId = Number(event.currentTarget.dataset.user);
-  store.selectedUserId = selectedUserId;
-  fillCurrentUserData(selectedUserId);
+  const userIndex = store.teamMembers.findIndex(person => person.id === selectedUserId);
+  changeActiveUser(userIndex);
 }
 
-function fillCurrentUserData(selectedUserId) {
-  const selectedUser = store.teamMembers.find(person => person.id === selectedUserId);
+function fillCurrentUserData() {
   const frontSide = document.querySelector('#cube-front');
+  const selectedUserIndex = store.selectedUserIndex;
+  const selectedUser = store.teamMembers[selectedUserIndex];
+  
   frontSide.innerHTML = `
     <div class="slider__text">${selectedUser.position}</div>
     <div class="slider__header">${selectedUser.name}</div>
   `;
 }
 
+function changeActiveUser(index = 0) {
+  const newUser = store.teamMembers[index];
+  if (newUser) { store.selectedUserIndex = index };
+  return newUser;
+}
 
-closeBtn.addEventListener('click', toggleModal);
-
-Array.from(profiles).forEach(profile => {
-  profile.addEventListener('click', setActiveUser);
-  profile.addEventListener('click', toggleModal);
-})
 
 // SLIDER
-sliderArrows.forEach(arrow => arrow.addEventListener('click', (event)=> changeSlideHandler(event) ));
-
 function changeSlideHandler(event) {
   const direction = event.target.dataset.direction || 'right';
 
-  changeSliderData(direction);
+  // change selected user 
+  const directionModifier = direction === 'right' ? 1 : -1;
+  const newUserIndex = store.selectedUserIndex + directionModifier;
+
+  if (!store.teamMembers[newUserIndex]) {
+    // stop the function if the person is unavailable
+    return false
+  }
+
+  changeActiveUser(newUserIndex);
+  changeHiddenSlideData();
   rotateSlider(event, direction);
 }
 
@@ -90,9 +108,6 @@ function rotateSlider(event, direction) {
   const frontSide = document.querySelector('#cube-front');
   const backSide = document.querySelector('#cube-back');
   const cube = document.querySelector('.slider__content');
-
-  const frontSideOpacity = store.isSliderFrontActive ? 0 : 1;
-  const backSideOpacity = store.isSliderFrontActive ? 1 : 0;
   
   // rotate cube's sides according to direction
   const prevRotation = getComputedStyle(cube).getPropertyValue('--rotation');
@@ -101,34 +116,26 @@ function rotateSlider(event, direction) {
   cube.style.setProperty('--rotation', `${nextRotation}deg`);
 
   // switch opacities and save currently active side 
-  frontSide.style.opacity = frontSideOpacity;
-  backSide.style.opacity = backSideOpacity;
+  frontSide.classList.toggle('slider__content__cube--hidden');
+  backSide.classList.toggle('slider__content__cube--hidden');
   store.isSliderFrontActive = !store.isSliderFrontActive;
 }
 
-function changeSliderData(direction) {
+function changeHiddenSlideData() {
   const frontSide = document.querySelector('#cube-front');
   const backSide = document.querySelector('#cube-back');
-  const directionModifier = direction === 'right' ? 1 : -1;
 
   // check for active user id and get next user data
-  const currentUserIndex = store.teamMembers.findIndex(person => person.id === store.selectedUserId);
-  const nextUserIndex = currentUserIndex + directionModifier;
-  const nextUser = store.teamMembers[nextUserIndex];
-
-  // save new selected user in the store
-  store.selectedUserId = store.selectedUserId + directionModifier;
-
+  const currentUser = store.teamMembers[store.selectedUserIndex];
+ 
   // append HTML to the inactive slide
   hiddenSide = store.isSliderFrontActive ? backSide : frontSide;
   hiddenSide.innerHTML = `
-    <div class="slider__text">${nextUser.position}</div>
-    <div class="slider__header">${nextUser.name}</div>
+    <div class="slider__text">${currentUser.position}</div>
+    <div class="slider__header">${currentUser.name}</div>
   `
 }
 
-
-toggleModal();
 
 
 /* TODO:

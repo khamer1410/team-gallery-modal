@@ -234,10 +234,13 @@ body {
     &__content {
       --rotation: 0deg;
       height: 100%;
+      width: 80%;
+      margin: 0 auto;
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
+      transform: scale(0.8); // added to prevent translateZ overscalling effect
       transform-style: preserve-3d;
 
       &__cube {
@@ -252,11 +255,13 @@ body {
         
         &--front {
           transform: rotateY(var(--rotation)) translateZ(100px);
-          opacity: 1;
         }
 
         &--back {
           transform: rotateY(calc(var(--rotation) - 180deg)) translateZ(100px);
+        }
+
+        &--hidden {
           opacity: 0;
         }
       }
