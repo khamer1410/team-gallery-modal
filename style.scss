@@ -267,16 +267,11 @@ body {
       }
     }
 
-    &__text {
-
-    }
     &__header {
       font-weight: bold;
       font-size: var(--header-big);
     }
   }
-
-
 
 @media (max-width: 1160px) {
   :root {
@@ -286,12 +281,7 @@ body {
 }
 
 @media (max-width: 950px) {
-  :root {
-    // --font-size: 12px;
-  }
-
   .team__gallery {
     grid-template-columns: repeat(auto-fit, 211px);
   }
-
 }

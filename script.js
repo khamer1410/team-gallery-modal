@@ -1,5 +1,5 @@
 // IIFE design pattern to keep only public methods available
-(function () {
+const App = (function () {
 
   function generateProfileHTML(data = {}, pictureVersion = 0) {
     const { photoSrc = `https://source.unsplash.com/random/200x200?v=${pictureVersion}`, id, name, position, location } = data;
@@ -120,7 +120,7 @@
   } 
 
   // PUBLIC METHODS
-  return App = {
+  return  {
     setProfilesHTML,
     addEventListeners
   };
@@ -144,15 +144,19 @@ const store = {
 }
 
 // Setup application
-App.setProfilesHTML(store.teamMembers);
-App.addEventListeners();
+document.addEventListener('DOMContentLoaded', initialize);
 
+function initialize() {
+  App.setProfilesHTML(store.teamMembers);
+  App.addEventListeners();
+}
 
 /* TODO:
-1. envelope events
+1. envelope icon action
 2. optimize profiles click event
 3. Add more animations (modal!)
 4. PixelPerfect
 5. Disable modal arrows on start/end
-6. Prevent multiple clicking
+6. Prevent multiple clicking on slider
+7. Slider mobile view
 */
