@@ -8,6 +8,9 @@
   --header-size: 60px;
   --header-big: 100px; }
 
+* {
+  box-sizing: border-box; }
+
 body {
   margin: 0;
   background: white;
@@ -21,7 +24,7 @@ body {
   body::after {
     content: '';
     background: url("assets/bg.png");
-    opacity: 0.4;
+    opacity: 0.3;
     position: fixed;
     top: 0;
     right: 0;
@@ -37,14 +40,15 @@ body {
 .team__title {
   text-align: center;
   font-family: "Open Sans", sans-serif;
-  font-size: var(--header-size);
   line-height: 65px;
   color: var(--main-color);
-  font-weight: 600;
+  font-weight: 600; }
+.team__header {
+  font-size: var(--header-size);
   transition: 0.5s; }
 .team__gallery {
   display: grid;
-  grid-template-columns: repeat(4, 211px);
+  grid-template-columns: repeat(5, 211px);
   grid-gap: 20px;
   justify-content: space-around; }
 
@@ -83,7 +87,7 @@ body {
     border-radius: 50%;
     background: #47c3db;
     z-index: 1;
-    opacity: 0.6;
+    opacity: 0.7;
     transition: 0.8s;
     cursor: pointer; }
   .photo:hover .photo__mask {
