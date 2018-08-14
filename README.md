@@ -2,7 +2,7 @@
 This site consist of two screens: team-gallery & modal with user details.
 Site based on PSD designs - preview visible in assets & below.
 
-[LIVE DEMO HERE](#)
+[CLICK HERE FOR LIVE DEMO](https://khamer1410.github.io/team-gallery-modal/)
 
 <img src="https://github.com/khamer1410/team-gallery-modal/blob/master/assets/preview-team.png?raw=true" style="">
 <img src="https://github.com/khamer1410/team-gallery-modal/blob/master/assets/preview-member.png?raw=true" style="">
