@@ -150,13 +150,3 @@ function initialize() {
   App.setProfilesHTML(store.teamMembers);
   App.addEventListeners();
 }
-
-/* TODO:
-1. envelope icon action
-2. optimize profiles click event
-3. Add more animations (modal!)
-4. PixelPerfect
-5. Disable modal arrows on start/end
-6. Prevent multiple clicking on slider
-7. Slider mobile view
-*/
