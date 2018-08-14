@@ -172,14 +172,15 @@ body {
     .slider__arrow--right {
       margin: 0 50px 0 5px; }
   .slider__main {
-    border: dashed grey 5px;
+    border: dashed rgba(255, 255, 255, 0.2) 5px;
     width: 1098px;
     height: 372px;
     overflow: hidden;
     color: white;
     text-align: center;
     font-size: var(--header-size);
-    perspective: 600px; }
+    perspective: 600px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4); }
   .slider__content {
     --rotation: 0deg;
     height: 100%;
