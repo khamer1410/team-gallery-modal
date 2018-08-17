@@ -42,6 +42,12 @@ const App = (function () {
     changeActiveUser(userIndex);
   }
 
+  function profileClickHandler(event) {
+    changeActiveUserByDataset(event);
+    changeSlideData('front');
+    toggleModal();
+  }
+
   // SLIDER METHODS
   function changeSlideHandler(event) {
     const direction = event.target.dataset.direction || 'right';
@@ -56,7 +62,7 @@ const App = (function () {
     }
     
     changeActiveUser(newUserIndex);
-    changeHiddenSlideData();
+    changeSlideData('back');
     rotateSlider(direction);
   }
 
@@ -77,30 +83,24 @@ const App = (function () {
     store.isSliderFrontActive = !store.isSliderFrontActive;
   }
 
-  function changeFrontSlideData() {
-    const frontSide = document.querySelector('#cube-front');
-    const selectedUserIndex = store.selectedUserIndex;
-    const selectedUser = store.teamMembers[selectedUserIndex];
-
-    frontSide.innerHTML = `
-              <div class="slider__text">${selectedUser.position}</div>
-              <div class="slider__header">${selectedUser.name}</div>
-            `;
-  }
-
-  function changeHiddenSlideData() {
+  function changeSlideData(side = 'front') {
     const frontSide = document.querySelector('#cube-front');
     const backSide = document.querySelector('#cube-back');
+
+    // check which side should be modified
+    const sideSelector = {
+      front: store.isSliderFrontActive ? frontSide : backSide,
+      back: store.isSliderFrontActive ? backSide : frontSide,
+    }
+    const sideToChange = sideSelector[side];
 
     // check for active user id and get next user data
     const currentUser = store.teamMembers[store.selectedUserIndex];
 
-    // append HTML to the inactive slide
-    hiddenSide = store.isSliderFrontActive ? backSide : frontSide;
-    hiddenSide.innerHTML = `
-    <div class="slider__text">${currentUser.position}</div>
-    <div class="slider__header">${currentUser.name}</div>
-  `
+    sideToChange.innerHTML = `
+              <div class="slider__text">${currentUser.position}</div>
+              <div class="slider__header">${currentUser.name}</div>
+            `;
   }
 
   // EVENTS
@@ -110,9 +110,7 @@ const App = (function () {
 
     const profiles = document.getElementsByClassName('photo');
     Array.from(profiles).forEach(profile => {
-      profile.addEventListener('click', changeActiveUserByDataset);
-      profile.addEventListener('click', changeFrontSlideData);
-      profile.addEventListener('click', toggleModal);
+      profile.addEventListener('click', profileClickHandler);
     })
 
     const sliderArrows = document.querySelectorAll('.slider__arrow');
