@@ -150,8 +150,7 @@ body {
 // MODAL
 .modal {
   display: none;
-  background: white; // fallback
-  background: url('assets/modal-bg.png');
+  background: url('assets/modal-bg.png'), white;
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
